@@ -11,13 +11,13 @@ mysql optimizer also known as **OSQL** is a **php query handling and manipulatio
 ## Geting Started
   **Over All Preview**
   ```php
-    //connect
+    //connect using default driver
     $firstconnection = new mysql/osql($DB_ADDRESS,$DB_USER,$DB_PASS,$DB_NAME);
     
-    // OR connect to mysqli
+    // OR connect to pdo
     $firstconnection = new mysql/osql($DB_ADDRESS,$DB_USER,$DB_PASS,$DB_NAME,'pdo');
     
-    //OR connect to pdo
+    //OR connect to mysqli
     $firstconnection = new mysql/osql($DB_ADDRESS,$DB_USER,$DB_PASS,$DB_NAME,'mysqli');
     
     //run query
@@ -28,16 +28,12 @@ mysql optimizer also known as **OSQL** is a **php query handling and manipulatio
     $query = "SELECT .... WHERE name = ? OR ?";
     $firstconnection->query($query);
     
-    // OR when connection is made by pdo you can use both
-    $query = "SELECT .... WHERE name = :name OR :name2";
-    $firstconnection->query($query);
-    
     //bind param to query if connection is by mysqli
     $name = 'my name';
     $name2 = 'second';
     $firstconnection->param('ss',$name,$second)
     
-    //bind param to query if connection is by pdo
+    //bind param to query if connection is by pdo and any supported bind param
     $name = 'my name';
     $firstconnection->param(:name,$name);
     $firstconnection->param(:name2,$name2);
@@ -50,11 +46,25 @@ mysql optimizer also known as **OSQL** is a **php query handling and manipulatio
     $objectname = names() //object is reture
     $firstconnection->run_all($objectname);
     
+    // Run any query
+    $firstconnection->run();
+    
+    // Get result as csv
+    $firstconnection->csv;
+    
+    // Get column by naame
+    $firstconnection->column('columnname');
+    
+    // Get column by index
+    $firstconnection->column(index);
+    
+    // IS THAT ALL? NO IS MORE THAN THAT
+    // CHECK DOCUMENTATION FOR MORE
+    
   ```
-  **Table of contents**
-
-  * [Installation](#installation)
-  * [Configuration](#configuration)
+## Documentation
+ [Documentation](https://github.com/hazeezet/mysql/wiki/)
+ 
 ## Installation
   It can be **included** or **required** in any php file or download using composer
   > Composer install
@@ -72,8 +82,9 @@ open **osqlconfig.php** in **vendor/hazeezet/mysql/src/osqlconfig.php**
 
 > Manual
 
-open **osqlconfig.php** in the directory you place the both file you download.
+open **osqlconfig.php** in the directory you place both file you download.
 
 Three main settings are there which are
 * [Log Warning](#log_warning) (Boolean) to log mysql warning if there is.
 * [Display error](#display_error) (Boolean) to display any error if there is. 
+* [Driver](#driver) (String) change the default driver to either **PDO** or **MYSQLI**
