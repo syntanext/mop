@@ -26,7 +26,7 @@ mysql optimizer also known as **OSQL** is a **php query handling and manipulatio
     // Get all column result as csv
     $firstconnection->csv;
     
-    // Get column by naame
+    // Get column by name
     $firstconnection->column('columnname');
     
     // Get column by index
