@@ -9,6 +9,13 @@ mysql optimizer also known as **OSQL** is a **php query handling and manipulatio
 - PDO
 
 ## Geting Started
+  you can actually run 4 lines of code and get your result with this library
+  ```php
+ $connect = new mysql/osql($DB_ADDRESS,$DB_USER,$DB_PASS,$DB_NAME);
+ $connect->query("SELECT .....");
+ $connect->run();
+ $connect->column('name');
+  ```
   **Over All Preview**
   ```php
     // SIMPLE PREVIEW
@@ -32,7 +39,7 @@ mysql optimizer also known as **OSQL** is a **php query handling and manipulatio
     // Get column by index
     $firstconnection->column(index);
     
-    // Get number of affected rows
+    // Get number of affected or selected rows
     $firstconnection->num_of_rows;
     
     // IS THAT ALL? NO IS MORE THAN THAT
