@@ -40,14 +40,14 @@ mysql optimizer also known as **OSQL** is a **php query handling and manipulatio
     
   ```
 ## Documentation
- [Documentation](https://github.com/hazeezet/mysql/wiki)
- [Reference](https://github.com/hazeezet/mysql/wiki/refrence)
+ * [Documentation](https://github.com/hazeezet/mysql/wiki)
+ * [Reference](https://github.com/hazeezet/mysql/wiki/refrence)
  
 ## Installation
   It can be **included** or **required** in any php file or download using composer
   > Composer install
   ```bash
-  $ composer require hazeezet/mysql
+  composer require hazeezet/mysql
   ```
   > Manual install
 
