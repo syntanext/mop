@@ -40,28 +40,20 @@ mysql optimizer also known as **OSQL** is a **php query handling and manipulatio
     
   ```
 ## Documentation
- [Documentation](https://github.com/hazeezet/mysql/wiki/)
+ [Documentation](https://github.com/hazeezet/mysql/wiki)
+ [Reference](https://github.com/hazeezet/mysql/wiki/refrence)
  
 ## Installation
   It can be **included** or **required** in any php file or download using composer
   > Composer install
-  ```
-  composer require hazeezet/mysql
+  ```bash
+  $ composer require hazeezet/mysql
   ```
   > Manual install
 
   download both files in src folder and place them anywhere in your folder directory then **include** or **reqiure** osql.php file.
   
-## Configuration
-> Composer
+## License
+   OSQL is licensed under the MIT License.
 
-open **osqlconfig.php** in **vendor/hazeezet/mysql/src/osqlconfig.php**
-
-> Manual
-
-open **osqlconfig.php** in the directory you place both file you download.
-
-Three main settings are there which are
-* [Log Warning](#log_warning) (Boolean) to log mysql warning if there is.
-* [Display error](#display_error) (Boolean) to display any error if there is. 
-* [Driver](#driver) (String) change the default driver to either **PDO** or **MYSQLI**
+Copyright 2021 hazeezet
