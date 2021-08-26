@@ -1,0 +1,23 @@
+{
+    "name": "hazeezet/mysql",
+    "description": "Run MYSQL query faster and get result in a reliable way.",
+    "keywords": ["mysql","pdo","mysqli","query","osql"],
+    "homepage": "https://github.com/hazeezet/mysql",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "hazeezet",
+            "email": "hazeezet@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "mysql\\": "src/"
+        }
+    },
+    "require": {
+        "php": ">=7.3.0"
+    }
+}
