@@ -14,7 +14,7 @@ mysql optimizer also known as **OSQL** is a **php query handling and manipulatio
  $connect = new mysql/osql($DB_ADDRESS,$DB_USER,$DB_PASS,$DB_NAME);
  $connect->query("SELECT .....");
  $connect->run();
- $connect->column('name');
+ $connect->get_column('name');
   ```
   **Over All Preview**
   ```php
@@ -34,10 +34,10 @@ mysql optimizer also known as **OSQL** is a **php query handling and manipulatio
     $firstconnection->csv;
     
     // Get column by name
-    $firstconnection->column('columnname');
+    $firstconnection->get_column('columnname');
     
     // Get column by index
-    $firstconnection->column(index);
+    $firstconnection->get_column(index);
     
     // Get number of affected or selected rows
     $firstconnection->num_of_rows;
@@ -49,6 +49,7 @@ mysql optimizer also known as **OSQL** is a **php query handling and manipulatio
 ## Documentation
  * [Documentation](https://github.com/hazeezet/mysql/wiki)
  * [Reference](https://github.com/hazeezet/mysql/wiki/reference)
+ * [Security](https://github.com/hazeezet/mysql/wiki/security)
  
 ## Installation
   It can be **included** or **required** in any php file or download using composer
@@ -60,7 +61,10 @@ mysql optimizer also known as **OSQL** is a **php query handling and manipulatio
 
   download both files in src folder and place them anywhere in your folder directory then **include** or **reqiure** osql.php file.
   
-## License
-   OSQL is licensed under the MIT License.
+   **LICENSE**
+   
+   fork and feel free to pull request....
+   
+   OSQL is licensed under the [MIT License](http://opensource.org/licenses/MIT).
 
-Copyright 2021 hazeezet
+   Copyright 2021 hazeezet
