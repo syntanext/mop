@@ -26,7 +26,7 @@ class osql
 //PUBLIC
   public $csv_header;
   public $csv;
-  public $header_row;
+  public $header_row = array();
   public $multi_header_row = array();
   public $error = false;
   public $warning = false;
@@ -51,7 +51,7 @@ class osql
 
   //PROTECTED
   protected $config;
-  protected $raw_result_query;
+  public $raw_result_query;
   protected $multi_insert_id = array();
   protected $multi_num_of_rows = array();
   protected $multi_raw_result_query = array();
@@ -173,7 +173,6 @@ class osql
     {
       $message = $args[0];
     }
-//,0
     $errors = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS,2);
     $errors = end($errors);
     $caller = $errors;
@@ -588,7 +587,7 @@ class osql
             $ColumnRow = array();
             $columnName = $column;
 
-            if (array_key_exists($column,$this->multi_raw_result_query))
+            if (array_key_exists($column,$this->raw_result_query[0]))
             {
               foreach ($this->raw_result_query as $row)
               {
