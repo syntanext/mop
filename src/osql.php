@@ -263,15 +263,15 @@ class osql
           array_push($this->header_row,$columnName['name']);
         }
         $csv_header = rtrim($csv_header, ",")."\n";
-        
+
         $this->raw_result_query = [];
         //Get all Rows and colums
-        foreach ($this->pdo_query as $column => $value)
+        while ($row = $this->pdo_query->fetch(PDO::FETCH_ASSOC))
         {
-          $this->raw_result_query[] = $value;
-          for ($b=0; $b < $count; $b++)
+          $this->raw_result_query[] = $row;
+          foreach ($row as $key => $value)
           {
-            if ($value[$b] == '')
+            if ($value == '')
             {
               $csv .= ' '.",";
               $csv_header .= ' '.",";
@@ -279,15 +279,13 @@ class osql
             
             else
             {
-              $csv .= $value[$b].",";
-              $csv_header .= $value[$b].",";
+              $csv .= $value.",";
+              $csv_header .= $value.",";
             }
-
           }
           $csv = rtrim($csv, ",")."\n";
           $csv_header = rtrim($csv_header, ",")."\n";
         }
-
         $this->csv = $csv;
         $this->csv_header = $csv_header;
       }
