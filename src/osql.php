@@ -173,8 +173,8 @@ class osql
     {
       $message = $args[0];
     }
-
-    $errors = debug_backtrace();
+//,0
+    $errors = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS,2);
     $errors = end($errors);
     $caller = $errors;
     $error_message = '';
