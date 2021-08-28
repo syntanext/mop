@@ -16,7 +16,7 @@ public function config ()
 
         "display_error" => false,       //boolean
         
-        "driver" => "pdo",              //string mysqli or pdo
+        "driver" => "mysqli",              //string mysqli or pdo
 
 
 
