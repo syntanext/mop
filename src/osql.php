@@ -263,10 +263,12 @@ class osql
           array_push($this->header_row,$columnName['name']);
         }
         $csv_header = rtrim($csv_header, ",")."\n";
-
+        
+        $this->raw_result_query = [];
         //Get all Rows and colums
         foreach ($this->pdo_query as $column => $value)
         {
+          $this->raw_result_query[] = $value;
           for ($b=0; $b < $count; $b++)
           {
             if ($value[$b] == '')
