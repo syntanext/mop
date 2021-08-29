@@ -135,12 +135,12 @@ class osql
       else
       {
         try {
-          $this->connect = new mysqli ($args[0],$args[1],$args[2],$args[3]);   //connect
+          @$this->connect = new mysqli ($args[0],$args[1],$args[2],$args[3]);   //connect
           $this->sql_type = 'MYSQLI';
 
         }
         
-        catch (Exception $e) {
+        catch (\Exception $e) {
             $message = "Database Connection Failed: " . $e->getMessage();   //reports a DB connection failure
             $this->error($message);
         }
@@ -151,11 +151,11 @@ class osql
     else
     {
       try {
-            $this->connect = new mysqli ($args[0],$args[1],$args[2],$args[3]);   //connect
+            @$this->connect = new mysqli ($args[0],$args[1],$args[2],$args[3]);   //connect
             $this->sql_type = 'MYSQLI';
           }
           
-      catch (Exception $e) {
+      catch (\Exception $e) {
           $message = "Database Connection Failed: " . $e->getMessage();   //reports a DB connection failure
           $this->error($message);
       }
