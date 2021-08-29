@@ -587,7 +587,7 @@ class osql
             $ColumnRow = array();
             $columnName = $column;
 
-            if (array_key_exists($column,$this->raw_result_query[0]))
+            if (isset($this->raw_result_query[0][$column]))
             {
               foreach ($this->raw_result_query as $row)
               {
