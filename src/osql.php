@@ -857,7 +857,7 @@ class osql
           $this->pdo_query = $this->connect->query($query);#->fetchAll(PDO::FETCH_ASSOC);
           $this->num_of_rows = $this->pdo_query->rowCount();
           $this->insert_id = $this->connect->lastInsertId();
-          $this->pdo_csv();
+          $this->csv();
           $this->pdo_query->closeCursor();
         }
         catch (\Exception $e)
