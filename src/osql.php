@@ -7,10 +7,10 @@ use Pdo;
 
 /*  
  *  description:Run MYSQL query faster and get result in a reliable way.;
- *  Version: 1.0.0;
+ *  Version: 1.2.0;
  *  Recommended php version: >= 7;
- * 
- * 
+ *  website: https://github.com/hazeezet/mysql
+ *  contact: hazeezet@gmail.com
  * 
  * 
  */
@@ -23,42 +23,46 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 class osql
 {
 
-//PUBLIC
-  public $csv_header;
-  public $csv;
-  public $header_row = array();
-  public $multi_header_row = array();
-  public $error = false;
-  public $warning = false;
-  public $error_message;
-  public $warning_errno;
-  public $warning_message;
-  public $warning_sqlstate;
-  public $connect;
-  public $num_of_rows = 0;
-  public $num_of_warnings = 0;
-  public $insert_id = 0;
-  public $multi_csv = array();
-  public $multi_csv_header = array();
+  //PUBLIC
+    public $csv_header;
+    public $csv;
+    public $header_row = array();
+    public $multi_header_row = array();
+    public $error = false;
+    public $warning = false;
+    public $error_message;
+    public $warning_errno;
+    public $warning_message;
+    public $warning_sqlstate;
+    public $connect;
+    public $num_of_rows = 0;
+    public $num_of_warnings = 0;
+    public $insert_id = 0;
+    public $multi_csv = array();
+    public $multi_csv_header = array();
 
 
 
   //PRIVATE
-  private $sql_type;
-  private $first_error;
-  private $prepare_query;
-  private $pdo_query;
+    private $first_error;
+    private $prepare_query;
+    private $pdo_query;
+    private $driver = 'MYSQLI';
+    private $host;
+    private $username;
+    private $password;
+    private $databasename;
 
   //PROTECTED
-  protected $config;
-  public $raw_result_query;
-  protected $multi_insert_id = array();
-  protected $multi_num_of_rows = array();
-  protected $multi_raw_result_query = array();
-  protected $display_error = false;
-  protected $runtime_error = false;
-  protected $log_warning = false;
-  protected $multi_query_error_index = 0;
+    protected $config;
+    protected $raw_result_query = array();
+    protected $multi_insert_id = array();
+    protected $multi_num_of_rows = array();
+    protected $multi_raw_result_query = array();
+    protected $display_error = false;
+    protected $runtime_error = false;
+    protected $log_warning = false;
+    protected $multi_query_error_index = 0;
 
 
 
@@ -66,105 +70,96 @@ class osql
   // Osql initialization method
   function __construct()
   {
-
-     if (file_exists(__DIR__.'/osqlconfig.php'))
+    if (func_num_args() != 4)
     {
-        require __DIR__.'/osqlconfig.php';
-        $configuration = new config;
-        $this->config = $configuration->config();
-    }
-
-    $args = func_get_args();
-    /*
-    * check for display error
-    *
-    */
-    if (isset($this->config['display_error']))
-    {
-        if ($this->config['display_error']===true)
-        {
-          $this->display_error = true;
-        }
-    }
-
-    /*
-    * check for log warning
-    *
-    */
-    if (isset($this->config['log_warning']))
-    {
-        if ($this->config['log_warning']===true)
-        {
-          $this->log_warning = true;
-        }
-    }
-
-
-
-    /*
-    * check if connection should be made by PDO or not
-    *
-    */
-    if (isset($args[4]) || isset($this->config['driver']))
-    {
-      if (!empty($args[4]))
-      {
-        $driver = strtolower($args[4]);
-      }
-
-      elseif (!empty($this->config['driver']))
-      {
-        $driver = strtolower($this->config['driver']);
-      }
-
-      if ($driver ==='pdo')
-      {
-        try {
-          $this->connect = new PDO("mysql:host=$args[0];dbname=$args[3]", $args[1], $args[2]);
-          $this->connect->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-          $this->sql_type = 'PDO';
-
-        } catch (\Exception $e) {
-          $message = "Database Connection Failed:" . $e->getMessage();
-          $this->error($message);
-        }
-
-      }
-
-      //else connect using mysqli
-      else
-      {
-        try {
-          @$this->connect = new mysqli ($args[0],$args[1],$args[2],$args[3]);   //connect
-          $this->sql_type = 'MYSQLI';
-
-        }
-        
-        catch (\Exception $e) {
-            $message = "Database Connection Failed: " . $e->getMessage();   //reports a DB connection failure
-            $this->error($message);
-        }
-      }
-
+      $message = 'Osql class expected at least 4 arguments';
+      $this->runtime_error = true;
+      $this->error($message);
     }
 
     else
     {
-      try {
-            @$this->connect = new mysqli ($args[0],$args[1],$args[2],$args[3]);   //connect
-            $this->sql_type = 'MYSQLI';
-          }
-          
-      catch (\Exception $e) {
-          $message = "Database Connection Failed: " . $e->getMessage();   //reports a DB connection failure
-          $this->error($message);
+
+      if (file_exists(__DIR__.'/osqlconfig.php'))
+      {
+          require_once __DIR__.'/osqlconfig.php';
+          $configuration = new config;
+          $this->config = $configuration->config();
       }
+
+      $args = func_get_args();
+
+      $this->host = $args[0];
+      $this->username = $args[1];
+      $this->password = $args[2];
+      $this->databasename = $args[3];
+      /*
+      * check for display error
+      *
+      */
+      if (isset($this->config['display_error']))
+      {
+          if ($this->config['display_error']===true)
+          {
+            $this->display_error = true;
+          }
+      }
+
+      /*
+      * check for log warning
+      *
+      */
+      if (isset($this->config['log_warning']))
+      {
+          if ($this->config['log_warning']===true)
+          {
+            $this->log_warning = true;
+          }
+      }
+
+
+
+      /*
+      * check if connection should be made by PDO or not
+      *
+      */
+      if (isset($args[4]) || isset($this->config['driver']))
+      {
+        if (!empty($args[4]))
+        {
+          $this->driver = strtoupper($args[4]);
+        }
+
+        elseif (!empty($this->config['driver']))
+        {
+          $this->driver = strtoupper($this->config['driver']);
+        }
+
+        if ($this->driver ==='PDO')
+        {
+          $this->pdo_connection(3);
+
+        }
+
+        //else connect using mysqli
+        else
+        {
+          $this->mysqli_connection(3);
+        }
+
+      }
+
+      else
+      {
+        $this->mysqli_connection(3);
+      }
+
     }
 
   }
 
-  /** PROTECTED METHOD */
-  protected function error()
+  /** private METHOD */
+  private function error()
   {
 
     $args = func_get_args();
@@ -173,7 +168,18 @@ class osql
     {
       $message = $args[0];
     }
-    $errors = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS,2);
+
+
+    if(isset($args[1]))
+    {
+      $index = $args[1];
+    }
+    else
+    {
+      $index = 2;
+    }
+
+    $errors = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS,$index);
     $errors = end($errors);
     $caller = $errors;
     $error_message = '';
@@ -198,7 +204,7 @@ class osql
 
   }
 
-  protected function csv()
+  private function csv()
   {
     if ($this->error)
     {
@@ -211,15 +217,17 @@ class osql
       $csv_header = '';
       $args = func_get_args();
 
-      if($this->sql_type === 'MYSQLI')
+      if($this->driver === 'MYSQLI')
       {
         $result = $args[0];
 
         //Get all Header row
         while ($fieldinfo = $result->fetch_field())
         {
-          $csv_header .= $fieldinfo->name.",";
-          array_push($this->header_row,$fieldinfo->name);
+          $name = $fieldinfo->name;
+          $name = str_replace("\"","\"\"",$name);
+          $csv_header .= "\"$name\"".",";
+          array_push($this->header_row,$name);
         }
         $csv_header = rtrim($csv_header, ",")."\n";
 
@@ -239,8 +247,10 @@ class osql
             
             else
             {
-              $csv .= $value.",";
-              $csv_header .= $value.",";
+              $col = $value;
+              $col = str_replace("\"","\"\"",$col);
+              $csv .= "\"$col\"".",";
+              $csv_header .= "\"$col\"".",";
             }
           }
           $csv = rtrim($csv, ",")."\n";
@@ -248,9 +258,10 @@ class osql
         }
         $this->csv = $csv;
         $this->csv_header = $csv_header;
+        mysqli_next_result($this->connect);
       }
 
-      elseif ($this->sql_type === 'PDO')
+      elseif ($this->driver === 'PDO')
       {
 
         $count = $this->pdo_query->columnCount();
@@ -259,19 +270,19 @@ class osql
         for ($a=0; $a < $count; $a++)
         {
           $columnName = $this->pdo_query->getColumnMeta($a);
-          $csv_header .= $columnName['name'].",";
-          array_push($this->header_row,$columnName['name']);
+          $name = $columnName['name'];
+          $name = str_replace("\"","\"\"",$name);
+          $csv_header .= "\"$name\"".",";
+          array_push($this->header_row,$name);
         }
         $csv_header = rtrim($csv_header, ",")."\n";
 
-        $this->raw_result_query = [];
         //Get all Rows and colums
-        while ($row = $this->pdo_query->fetch(PDO::FETCH_ASSOC))
+        foreach ($this->pdo_query as $column => $value)
         {
-          $this->raw_result_query[] = $row;
-          foreach ($row as $key => $value)
+          for ($b=0; $b < $count; $b++)
           {
-            if ($value == '')
+            if ($value[$b] == '')
             {
               $csv .= ' '.",";
               $csv_header .= ' '.",";
@@ -279,27 +290,90 @@ class osql
             
             else
             {
-              $csv .= $value.",";
-              $csv_header .= $value.",";
+              $col = $value[$b];
+              $col = str_replace("\"","\"\"",$col);
+              $csv .= "\"$col\"".",";
+              $csv_header .= "\"$col\"".",";
             }
+
           }
           $csv = rtrim($csv, ",")."\n";
           $csv_header = rtrim($csv_header, ",")."\n";
         }
+
         $this->csv = $csv;
         $this->csv_header = $csv_header;
       }
     }
   }
 
-  protected function multi_query_csv($result)
+  private function mysqli_connection()
+  {
+    $host = $this->host;
+    $username = $this->username;
+    $password = $this->password;
+    $database = $this->databasename;
+    $args = func_get_args();
+    $index = $args[0];
+
+    try
+    {
+      @$this->connect = new mysqli ($host,$username,$password,$database);   //connect
+      $this->driver = 'MYSQLI';
+
+    }
+          
+    catch (\Throwable $e)
+    {
+        $message = "Database Connection Failed: " . $e->getMessage();   //reports a DB connection failure
+        $this->error($message,$index);
+    }
+  }
+
+  private function pdo_connection()
+  {
+    $host = $this->host;
+    $username = $this->username;
+    $password = $this->password;
+    $database = $this->databasename;
+    $args = func_get_args();
+    $index = $args[0];
+
+    try
+    {
+      $this->connect = new PDO("mysql:host=$host;dbname=$database", $username, $password);
+      $this->connect->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+      $this->driver = 'PDO';
+
+    }
+    catch (\Throwable $e)
+    {
+      $message = "Database Connection Failed:" . $e->getMessage();
+      $this->error($message,$index);
+    }
+  }
+
+  private function new_connection()
+  {
+    $this->close();
+    if ($this->driver === 'MYSQLI')
+    {
+      $this->mysqli_connection(4);
+    }
+
+    elseif ($this->driver === 'PDO')
+    {
+      $this->pdo_connection(4);
+    }
+  }
+
+  private function multi_query_csv($result)
   {
    
     do
     {
       $this->multi_query_error_index = $this->multi_query_error_index + 1;
       $affected = $this->connect->affected_rows;
-      echo $this->multi_query_error_index;
 
       if ($affected >= 0)
       {
@@ -322,7 +396,9 @@ class osql
           //Get all Header row
           while ($fieldinfo = $result->fetch_field())
           {
-            $csv_header .= $fieldinfo->name.",";
+            $name = $fieldinfo->name;
+            $name = str_replace("\"","\"\"",$name);
+            $csv_header .= "\"$name\"".",";
             $multi_header_row[] = $fieldinfo->name;
           }
           $csv_header = rtrim($csv_header, ",")."\n";
@@ -341,8 +417,10 @@ class osql
                 $csv .= ' '.",";
                 $csv_header .= ' '.",";
               }else {
-                $csv .= $value.",";
-                $csv_header .= $value.",";
+                $col = $value;
+                $col = str_replace("\"","\"\"",$col);
+                $csv .= "\"$col\"".",";
+                $csv_header .= "\"$col\"".",";
               }
             }
 
@@ -586,7 +664,6 @@ class osql
         {
             $ColumnRow = array();
             $columnName = $column;
-
             if (isset($this->raw_result_query[0][$column]))
             {
               foreach ($this->raw_result_query as $row)
@@ -699,7 +776,7 @@ class osql
               
               if ($key_exist)
               {
-                return $ColumnRow[0];
+                return $ColumnRow;
               }
             }
 
@@ -733,7 +810,7 @@ class osql
 
                 if ($key_exist)
                 {
-                  return $ColumnRow[0];
+                  return $ColumnRow;
                 }
                 
             }
@@ -774,7 +851,7 @@ class osql
 
     else
     {
-      if ($this->sql_type === 'MYSQLI')
+      if ($this->driver === 'MYSQLI')
       {
           try 
           {
@@ -838,19 +915,19 @@ class osql
                 }
               }
 
-              catch (\Exception $e)
+              catch (\Throwable $e)
               {
                 $this->error($e->getMessage());
               }
             }
           }
-          catch (\Exception $e)
+          catch (\Throwable $e)
           {
             $this->error($e->getMessage());
           }
       }
 
-      elseif ($this->sql_type === 'PDO')
+      elseif ($this->driver === 'PDO')
       {
         try
         {
@@ -860,7 +937,7 @@ class osql
           $this->csv();
           $this->pdo_query->closeCursor();
         }
-        catch (\Exception $e)
+        catch (\Throwable $e)
         {
           $this->error($e->getMessage());
         }
@@ -877,7 +954,7 @@ class osql
 
     else
     {
-      if ($this->sql_type === 'MYSQLI')
+      if ($this->driver === 'MYSQLI')
       {
         try 
         {
@@ -887,20 +964,20 @@ class osql
                 $this->error($message);
             }
         }
-        catch (\Exception $e)
+        catch (\Throwable $e)
         {
           $this->error($e->getMessage());
         }
       }
 
-      elseif ($this->sql_type === 'PDO')
+      elseif ($this->driver === 'PDO')
       {
         try
         {
           $this->pdo_query = $this->connect->prepare($query);
         }
         
-        catch (\Exception $e)
+        catch (\Throwable $e)
         {
           $this->error($e->getMessage());
         }
@@ -911,7 +988,7 @@ class osql
 
   public function multi_query($query)
   {
-    if($this->sql_type === 'MYSQLI')
+    if($this->driver === 'MYSQLI')
     {
       try
       {
@@ -921,7 +998,7 @@ class osql
             }
       }
       
-      catch (\Exception $e)
+      catch (\Throwable $e)
       {
         $message = $e->getMessage().' at query index <b>'.$this->multi_query_error_index .'</b>, this query and any other query that follow has failed';
         $this->error($message);
@@ -945,7 +1022,7 @@ class osql
 
     else
     {
-      if ($this->sql_type === 'MYSQLI')
+      if ($this->driver === 'MYSQLI')
       {
         try
         {
@@ -959,13 +1036,13 @@ class osql
 
         }
 
-        catch (\Exception $e)
+        catch (\Throwable $e)
         {
             $this->error($e->getMessage());
         }
       }
 
-      elseif ($this->sql_type === 'PDO')
+      elseif ($this->driver === 'PDO')
       {
         try
         {
@@ -978,7 +1055,7 @@ class osql
             }
         }
         
-        catch (\Exception $e) {
+        catch (\Throwable $e) {
           $this->error($e->getMessage());
         }
       }
@@ -995,7 +1072,7 @@ class osql
 
     else
     {
-      if ($this->sql_type === 'PDO')
+      if ($this->driver === 'PDO')
       {
         try
         {
@@ -1005,14 +1082,14 @@ class osql
           $this->csv();
           $this->pdo_query->closeCursor();
         }
-        catch (\Exception $e) {
+        catch (\Throwable $e) {
           $this->error($e->getMessage());
         }
       }
 
       else
       {
-        $message = 'RUN_ALL: connection must be made using <b>PDO</>';
+        $message = 'RUN_ALL: connection must be made using <b>PDO</b>';
       }
     }
   }
@@ -1027,7 +1104,7 @@ class osql
     else
     {
 
-      if ($this->sql_type === 'MYSQLI')
+      if ($this->driver === 'MYSQLI')
       {
         try {
   
@@ -1077,13 +1154,13 @@ class osql
               }
             }
         }
-        catch (\Exception $e)
+        catch (\Throwable $e)
         {
           $this->error($e->getMessage());
         }
       }
       
-      elseif($this->sql_type === 'PDO')
+      elseif($this->driver === 'PDO')
       {
         try
         {
@@ -1094,13 +1171,36 @@ class osql
           $this->pdo_query->closeCursor();
 
         }
-        catch (\Exception $e) {
+        catch (\Throwable $e) {
           $this->error($e->getMessage());
         }
         
       }
       
     }
+  }
+
+  public function free_results()
+  {
+    $this->csv_header = '';
+    $this->csv = '';
+    $this->header_row = array();
+    $this->multi_header_row = array();
+    $this->error_message = '';
+    $this->warning_errno = '';
+    $this->warning_message = '';
+    $this->warning_sqlstate = '';
+    $this->num_of_rows = 0;
+    $this->num_of_warnings = 0;
+    $this->insert_id = 0;
+    $this->multi_csv = array();
+    $this->multi_csv_header = array();
+
+    $this->raw_result_query = array();
+    $this->multi_insert_id = array();
+    $this->multi_num_of_rows = array();
+    $this->multi_raw_result_query = array();
+    $this->multi_query_error_index = 0;
   }
 
   public function log_warning()
@@ -1119,17 +1219,206 @@ class osql
       {
         $this->log_warning = true;
       }
+      else
+      {
+        $this->log_warning = false;
+      }
+    }
+  }
+
+  public function display_error()
+  {
+    if (func_num_args() != 1)
+    {
+      $message = 'Display error expected one argument';
+      $this->runtime_error = true;
+      $this->error($message);
+    }
+
+    else
+    {
+      $args = func_get_args();
+      if ($args[0] == true)
+      {
+        $this->display_error = true;
+      }
+      else
+      {
+        $this->display_error = false;
+      }
+    }
+  }
+
+  public function driver()
+  {
+    if (func_num_args() != 1)
+    {
+      $message = 'Driver expected one argument';
+      $this->runtime_error = true;
+      $this->error($message);
+    }
+
+    else
+    {
+      $args = func_get_args();
+      $args = strtoupper($args[0]);
+      if ($args == 'PDO')
+      {
+        $this->driver = 'PDO';
+        $this->new_connection();
+      }
+      else
+      {
+        $this->driver = 'MYSQLI';
+        $this->new_connection();
+      }
+    }
+  }
+
+  public function change_host()
+  {
+    if (func_num_args() != 1)
+    {
+      $message = 'change host expected one argument';
+      $this->runtime_error = true;
+      $this->error($message);
+    }
+    else
+    {
+      $args = func_get_args();
+      $args = $args[0];
+      if (gettype($args) != 'string')
+      {
+        $message = 'argument expected to be string';
+        $this->runtime_error = true;
+        $this->error($message);
+      }
+      else
+      {
+        $this->host = $args;
+        $this->new_connection();
+      }
+    }
+  }
+
+  public function change_username()
+  {
+    if (func_num_args() != 1)
+    {
+      $message = 'change username expected one argument';
+      $this->runtime_error = true;
+      $this->error($message);
+    }
+    else
+    {
+      $args = func_get_args();
+      $args = $args[0];
+      if (gettype($args) != 'string')
+      {
+        $message = 'argument expected to be string';
+        $this->runtime_error = true;
+        $this->error($message);
+      }
+      else
+      {
+        $this->username = $args;
+        $this->new_connection();
+      }
+    }
+  }
+
+  public function change_password()
+  {
+    if (func_num_args() != 1)
+    {
+      $message = 'change password expected one argument';
+      $this->runtime_error = true;
+      $this->error($message);
+    }
+    else
+    {
+      $args = func_get_args();
+      $args = $args[0];
+      if (gettype($args) != 'string')
+      {
+        $message = 'argument expected to be string';
+        $this->runtime_error = true;
+        $this->error($message);
+      }
+      else
+      {
+        $this->password = $args;
+        $this->new_connection();
+      }
+    }
+  }
+
+  public function change_db()
+  {
+    if (func_num_args() != 1)
+    {
+      $message = 'change database expected one argument';
+      $this->runtime_error = true;
+      $this->error($message);
+    }
+    else
+    {
+      $args = func_get_args();
+      $args = $args[0];
+      if (gettype($args) != 'string')
+      {
+        $message = 'argument expected to be string';
+        $this->runtime_error = true;
+        $this->error($message);
+      }
+      else
+      {
+        $this->databasename = $args;
+        $this->new_connection();
+      }
+    }
+  }
+
+  public function change_all()
+  {
+    if (func_num_args() != 4)
+    {
+      $message = 'change host expected four argument';
+      $this->runtime_error = true;
+      $this->error($message);
+    }
+    else
+    {
+      $args = func_get_args();
+      $arg1 = $args[0];
+      $arg2 = $args[1];
+      $arg3 = $args[2];
+      $arg4 = $args[3];
+      if ((gettype($arg1) != 'string') || (gettype($arg2) != 'string') || (gettype($arg3) != 'string') || (gettype($arg4) != 'string'))
+      {
+        $message = 'all argument expected to be string';
+        $this->runtime_error = true;
+        $this->error($message);
+      }
+      else
+      {
+        $this->host = $arg1;
+        $this->username = $arg2;
+        $this->password = $arg3;
+        $this->databasename = $arg4;
+        $this->new_connection();
+      }
     }
   }
 
   public function close()
   {
-    if ($this->sql_type === 'MYSQLI')
+    if ($this->driver === 'MYSQLI')
     {
       $this->connect->close();
     }
 
-    elseif ($this->sql_type === 'PDO')
+    elseif ($this->driver === 'PDO')
     {
       $this->connect = null;
     }
