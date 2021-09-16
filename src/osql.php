@@ -8,6 +8,7 @@ use Pdo;
 /*  
  *  description:Run MYSQL query faster and get result in a reliable way.;
  *  Version: 1.2.0;
+ *  Type: website version.
  *  Recommended php version: >= 7;
  *  website: https://github.com/hazeezet/mysql
  *  contact: hazeezet@gmail.com
