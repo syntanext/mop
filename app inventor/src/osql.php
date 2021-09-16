@@ -9,7 +9,7 @@ use Pdo;
 
 /*  
  *  description:Run MYSQL query faster and get result in a reliable way.;
- *  Version: 1.2.0;
+ *  Version: 1.2.1;
  *  Type: App inventor version.
  *  Recommended php version: >= 7;
  *  website: https://github.com/hazeezet/mysql
@@ -51,7 +51,7 @@ class osql
     private $post_masterkey = '';
     private $query;
     private $injection;
-    private $DefaultInjection = array("null","*","create","drop","truncate","1,1","https","http","top 0 ","top 1 ","benchmark","union","root","delay","true","false","getRequestString","schema","syscolums","sysobjects","dump","sleep","ascii","extractvalue","database","null","version","shutdown","declare","begin","end","not in","not exist","isnull","load","admin","convert","pytW"," 1 ","%","||"," 0 ","injectx");
+    private $DefaultInjection = array("create","drop","truncate","1,1","https","http","top 0 ","top 1 ","benchmark","union","root","delay","true","false","getRequestString","schema","syscolums","sysobjects","dump","sleep","ascii","extractvalue","database","version","shutdown","declare","begin","end","not in","not exist","isnull","load","admin","convert","pytW"," 1 ","%","||"," 0 ","injectx");
 
   //PROTECTED
     protected $config;
@@ -280,12 +280,11 @@ class osql
     }
   }
 
-  public function add_query()
+  public function add_query($query)
   {
 
     if ($this->driver === 'PDO')
     {
-      $query = $this->query;
       try
       {
         $this->pdo_query = $this->connect->query($query);#->fetchAll(PDO::FETCH_ASSOC);
@@ -392,6 +391,16 @@ class osql
         }
         
       }
+  }
+
+  public function free_results()
+  {
+    $this->csv_header = '';
+    $this->csv = '';
+    $this->num_of_rows = 0;
+    $this->insert_id = 0;
+
+    $this->raw_result_query = array();
   }
 
   public function close()

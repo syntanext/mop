@@ -36,6 +36,13 @@ if(isset($_POST['query']) && isset($_POST['key']))
         $connect->run();
     }
 
+    if(isset($_POST['add_query']))
+    {
+        $query = $_POST['add_query'];
+        $connect->free_results();
+        $connect->add_query($query);
+    }
+
     if(!empty($connect->csv))
     {
 
