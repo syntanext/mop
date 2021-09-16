@@ -11,7 +11,7 @@ mysql optimizer also known as **OSQL** is a **php query handling and manipulatio
 ## Geting Started
   you can actually run 4 lines of code and get your result with this library
   ```php
- $connect = new mysql/osql($DB_ADDRESS,$DB_USER,$DB_PASS,$DB_NAME);
+ $connect = new mysql\osql($DB_ADDRESS,$DB_USER,$DB_PASS,$DB_NAME);
  $connect->query("SELECT .....");
  $connect->run();
  $connect->get_column('name');
@@ -21,7 +21,7 @@ mysql optimizer also known as **OSQL** is a **php query handling and manipulatio
     // SIMPLE PREVIEW
     
     // connect
-    $firstconnection = new mysql/osql($DB_ADDRESS,$DB_USER,$DB_PASS,$DB_NAME);
+    $firstconnection = new mysql\osql($DB_ADDRESS,$DB_USER,$DB_PASS,$DB_NAME);
 
     // query
     $query = "SELECT ....";
