@@ -11,7 +11,9 @@ if(isset($_POST['query']) && isset($_POST['key']))
 {   
     $connect = new mysql();
 
-    $connect->verify();
+    $query = $_POST['query'];
+
+    $connect->verify($query);
 
     $connect->connect();
 
@@ -39,6 +41,8 @@ if(isset($_POST['query']) && isset($_POST['key']))
     if(isset($_POST['add_query']))
     {
         $query = $_POST['add_query'];
+
+        $connect->verify($query);
         $connect->free_results();
         $connect->add_query($query);
     }

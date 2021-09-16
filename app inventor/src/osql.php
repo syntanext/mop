@@ -193,7 +193,7 @@ class osql
 
 
   /** PUBLIC METHOD */
-  public function verify()
+  public function verify($query)
   {
 
     if(!isset($_POST['key']))
@@ -214,7 +214,7 @@ class osql
         {
             foreach ($this->injection as $Injection)
             {
-                if (strlen(stristr($this->query,$Injection)) > 0)
+                if (strlen(stristr($query,$Injection)) > 0)
                 {
                     header("HTTP/1.0 400 Bad Request");
                     die('You may not have the permission to run this query');
@@ -228,7 +228,7 @@ class osql
     {
         foreach ($this->DefaultInjection as $Injection)
         {
-            if (strlen(stristr($this->query,$Injection)) > 0)
+            if (strlen(stristr($query,$Injection)) > 0)
             {
                 header("HTTP/1.0 400 Bad Request");
                 die('You may not have the permission to run this query');
@@ -236,7 +236,7 @@ class osql
             }
         }
 
-        $Rquery0 = str_replace("="," = ",$this->query);  // It Rearrange the query
+        $Rquery0 = str_replace("="," = ",$query);  // It Rearrange the query
         $Rquery1 = trim(preg_replace('/\s\s+/', ' ', str_replace("\n", " ", $Rquery0))); //It Rearrange the query
         $Rquery2 = str_replace( array( "' '","' '","''","'-'","'_'","'&'","'^'","'*'","'x'","1__","1--"," i ","--","|","?","'= 1'","1 = 1","#","' = '","top 1","x = x","1 = 0","x = y", ),'',$Rquery1 ); // It Rearrange the query
         $Rquery3 = trim(preg_replace('/" = "|""|= "|"|<!--.*?--> <!--.*?-->|"&"|"^"|"*"|"x"|[0-9]+ = [0-9]+|top 1 /', ' ', $Rquery2)); // Rearrange the query
