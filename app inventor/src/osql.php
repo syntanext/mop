@@ -266,17 +266,17 @@ class osql
 
       }
 
-      //else connect using mysqli
+      //else connect using mysqli--> TODO
       else
       {
-        $this->mysqli_connection();
+        $this->pdo_connection();
       }
 
     }
 
     else
     {
-      $this->mysqli_connection();
+      $this->pdo_connection();
     }
   }
 
