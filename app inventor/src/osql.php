@@ -41,7 +41,7 @@ class osql
     private $prepare_query;
     private $pdo_query;
 
-    private $driver = 'MYSQLI';
+    private $driver = 'PDO';
     private $host;
     private $username;
     private $password;
