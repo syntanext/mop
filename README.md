@@ -66,6 +66,13 @@ mysql optimizer also known as **OSQL** is a **php query handling and manipulatio
 
   download both files in src folder and place them anywhere in your folder directory then **include** or **reqiure** osql.php file.
   
+  IF YOU GET UNKNOWN ERROR WITH THIS LIBRARY ON YOUR WEB SERVER...... YOU HAVE TO TRY THIS.
+  
+  ![osql_error](https://user-images.githubusercontent.com/52476329/133803606-93310987-82cb-464f-8186-d4bab7c9667c.png)
+  
+  Go to your cpanel, find change php version and click on it, when the page fullly loaded, first of all make sure you are using php >= 7.
+  Then uncheck **mysqli** and check **nd_mysqli** save it and try again with the library , everything should work fine.
+  
    **LICENSE**
    
    fork and feel free to pull request....
