@@ -7,7 +7,7 @@ use Pdo;
 
 /*  
  *  description:Run MYSQL query faster and get result in a reliable way.;
- *  Version: 1.2.0;
+ *  Version: 1.2.2;
  *  Type: website version.
  *  Recommended php version: >= 7;
  *  website: https://github.com/hazeezet/mysql
@@ -60,7 +60,7 @@ class osql
     protected $multi_insert_id = array();
     protected $multi_num_of_rows = array();
     protected $multi_raw_result_query = array();
-    protected $display_error = false;
+    protected $display_error = true;
     protected $runtime_error = false;
     protected $log_warning = false;
     protected $multi_query_error_index = 0;
@@ -357,6 +357,7 @@ class osql
   private function new_connection()
   {
     $this->close();
+    $this->free_results();
     if ($this->driver === 'MYSQLI')
     {
       $this->mysqli_connection(4);
@@ -433,9 +434,6 @@ class osql
           array_push($this->multi_csv,$csv);
           array_push($this->multi_csv_header,$csv_header);
           array_push($this->multi_num_of_rows ,$this->connect->affected_rows);
-
-
-          $result->free_result();
       }
      
     }

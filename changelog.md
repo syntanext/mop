@@ -1,3 +1,6 @@
+VERSION:::: 1.2.2
+    * Bugs fixed.
+
 VERSION:::: 1.2.0
     * Added new features or method.
     * Able to change host, database, username and password on the run.

@@ -12,9 +12,9 @@ public function config ()
 
 
 
-        "log_warning" => true,          //boolean
+        "log_warning" => false,          //boolean
 
-        "display_error" => false,       //boolean
+        "display_error" => true,       //boolean
         
         "driver" => "mysqli",              //string mysqli or pdo
 
