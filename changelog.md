@@ -1,3 +1,7 @@
+VERSION:::: 1.4.0
+    * Added feature or method to reconnect to the database.
+    * When you change database name or other information, you have to manually reconnect. before was automatic.
+
 VERSION:::: 1.2.2
     * Bugs fixed.
 

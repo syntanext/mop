@@ -7,7 +7,7 @@ use Pdo;
 
 /*  
  *  description:Run MYSQL query faster and get result in a reliable way.;
- *  Version: 1.2.2;
+ *  Version: 1.4.0;
  *  Type: website version.
  *  Recommended php version: >= 7;
  *  website: https://github.com/hazeezet/mysql
@@ -1382,7 +1382,7 @@ class osql
   {
     if (func_num_args() != 4)
     {
-      $message = 'change host expected four argument';
+      $message = 'change all expected four argument';
       $this->runtime_error = true;
       $this->error($message);
     }
@@ -1395,7 +1395,7 @@ class osql
       $arg4 = $args[3];
       if ((gettype($arg1) != 'string') || (gettype($arg2) != 'string') || (gettype($arg3) != 'string') || (gettype($arg4) != 'string'))
       {
-        $message = 'all argument expected to be string';
+        $message = 'all argument expected to be a string';
         $this->runtime_error = true;
         $this->error($message);
       }
@@ -1405,9 +1405,13 @@ class osql
         $this->username = $arg2;
         $this->password = $arg3;
         $this->databasename = $arg4;
-        $this->new_connection();
       }
     }
+  }
+
+  public function reconnect()
+  {
+    $this->new_connection();
   }
 
   public function close()
