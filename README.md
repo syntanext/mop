@@ -50,7 +50,7 @@ mysql optimizer also known as **OSQL** is a **php query handling and manipulatio
  * [Documentation](https://github.com/hazeezet/mysql/wiki)
  * [Reference](https://github.com/hazeezet/mysql/wiki/reference)
  * [Security](https://github.com/hazeezet/mysql/wiki/security)
- * [Video](https://www.youtube.com/watch?v=hyZr_QePqZs&list=PLcvp4KNBaSTS42ZOjOAJGpVMG8CKBRlTM)
+ * [Video](https://www.youtube.com/watch?v=lG_VoKxtUHk&list=PLJPXjarj_PApgLT6oMMdp7jR5goESwtZc)
  
 ## App Inventor Documentation
   * [Kodular](https://community.kodular.io/t/osql-mysql-freedom-is-here-injection-stop-and-bind-parameter-available/143704)
