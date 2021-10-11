@@ -71,7 +71,7 @@ class osql
   // Osql initialization method
   function __construct()
   {
-    if (func_num_args() != 4)
+    if (func_num_args() < 4)
     {
       $message = 'Osql class expected at least 4 arguments';
       $this->runtime_error = true;
@@ -1025,10 +1025,10 @@ class osql
       {
         try
         {
-            $param = $this->prepare_query->bind_param(...$args);
+            @$param = $this->prepare_query->bind_param(...$args);
             if ($param === false)
             {
-                $error = $this->prepare_query->error ?: 'Number of elements in type definition string may not match number of bind variables OR other error may occur';
+                $error = $this->prepare_query->error ?: 'Number of variables doesn\'t match number of parameters in prepared statement  OR other error may occur';
                 $message = 'Query bind param failed: '.$error;
                 $this->error($message);
             }
@@ -1089,6 +1089,7 @@ class osql
       else
       {
         $message = 'RUN_ALL: connection must be made using <b>PDO</b>';
+        $this->error($message);
       }
     }
   }

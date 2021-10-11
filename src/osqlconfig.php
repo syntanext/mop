@@ -1,8 +1,6 @@
 <?php
 namespace mysql;
 
-$configure = true;
-
 class configuration
 {
 public function config ()
