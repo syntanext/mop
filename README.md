@@ -1,5 +1,8 @@
+
+![MOP_logo](https://user-images.githubusercontent.com/52476329/137361314-296884d7-2b98-4069-b753-c20d15ac4c67.png)
+
 # Mysql Optimizer
-mysql optimizer also known as **OSQL** is a **php query handling and manipulation** library providing easy and reliable way to manipulate query and get result in a fastest way.
+mysql optimizer also known as **MOP** is a **php query handling and manipulation** library providing easy and reliable way to manipulate query and get result in a fastest way.
 
 ## Recomended Requirement
 - PHP >= 7
@@ -77,6 +80,6 @@ mysql optimizer also known as **OSQL** is a **php query handling and manipulatio
    
    fork and feel free to pull request....
    
-   OSQL is licensed under the [MIT License](http://opensource.org/licenses/MIT).
+   MOP is licensed under the [MIT License](http://opensource.org/licenses/MIT).
 
    Copyright 2021 hazeezet
