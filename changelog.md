@@ -1,3 +1,8 @@
+VERSION:::: 1.4.2
+    * change of driver Bugs fixed.
+    * change of database information bugs fixed.
+
+
 VERSION:::: 1.4.1
     * Bugs fixed.
 

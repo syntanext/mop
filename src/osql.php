@@ -7,7 +7,7 @@ use Pdo;
 
 /*  
  *  description:Run MYSQL query faster and get result in a reliable way.;
- *  Version: 1.4.1;
+ *  Version: 1.4.2;
  *  Type: website version.
  *  Recommended php version: >= 7;
  *  website: https://github.com/hazeezet/mysql
@@ -356,7 +356,6 @@ class osql
 
   private function new_connection()
   {
-    $this->close();
     $this->free_results();
     if ($this->driver === 'MYSQLI')
     {
@@ -1264,11 +1263,13 @@ class osql
       $args = strtoupper($args[0]);
       if ($args == 'PDO')
       {
+        $this->close();
         $this->driver = 'PDO';
         $this->new_connection();
       }
       else
       {
+        $this->close();
         $this->driver = 'MYSQLI';
         $this->new_connection();
       }
@@ -1295,8 +1296,8 @@ class osql
       }
       else
       {
+        $this->close();
         $this->host = $args;
-        $this->new_connection();
       }
     }
   }
@@ -1321,8 +1322,8 @@ class osql
       }
       else
       {
+        $this->close();
         $this->username = $args;
-        $this->new_connection();
       }
     }
   }
@@ -1347,8 +1348,8 @@ class osql
       }
       else
       {
+        $this->close();
         $this->password = $args;
-        $this->new_connection();
       }
     }
   }
@@ -1373,8 +1374,8 @@ class osql
       }
       else
       {
+        $this->close();
         $this->databasename = $args;
-        $this->new_connection();
       }
     }
   }
@@ -1402,6 +1403,7 @@ class osql
       }
       else
       {
+        $this->close();
         $this->host = $arg1;
         $this->username = $arg2;
         $this->password = $arg3;
@@ -1412,6 +1414,7 @@ class osql
 
   public function reconnect()
   {
+    $this->close();
     $this->new_connection();
   }
 
@@ -1419,7 +1422,7 @@ class osql
   {
     if ($this->driver === 'MYSQLI')
     {
-      $this->connect->close();
+      @$this->connect->close();
     }
 
     elseif ($this->driver === 'PDO')
