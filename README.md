@@ -10,6 +10,11 @@ mysql optimizer also known as **MOP** is a **php query handling and manipulation
 ## Supported Query Handler
 - MYSQLI
 - PDO
+- 
+## Upgrading
+
+* [from version 1 to version 2 or after](https://github.com/hazeezet/mysql/wiki/upgrade#V1-to-V2)
+
 
 ## Geting Started
   you can actually run 4 lines of code and get your result with this library
