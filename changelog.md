@@ -1,3 +1,8 @@
+VERSION:::: 1.4.3
+    * Bugs fixed.
+    * added new feature to check if database is still connected.
+
+
 VERSION:::: 1.4.2
     * change of driver Bugs fixed.
     * change of database information bugs fixed.

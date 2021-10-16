@@ -7,7 +7,7 @@ use Pdo;
 
 /*  
  *  description:Run MYSQL query faster and get result in a reliable way.;
- *  Version: 1.4.2;
+ *  Version: 1.4.3;
  *  Type: website version.
  *  Recommended php version: >= 7;
  *  website: https://github.com/hazeezet/mysql
@@ -851,6 +851,8 @@ class osql
     {
       if ($this->driver === 'MYSQLI')
       {
+        if(@$this->connect->ping())
+        {
           try 
           {
             $this->prepare_query = $this->connect->prepare($query);
@@ -923,6 +925,12 @@ class osql
           {
             $this->error($e->getMessage());
           }
+        }
+        else
+        {
+          $message = 'MYSQL is not connected';
+          $this->error($message);
+        }
       }
 
       elseif ($this->driver === 'PDO')
@@ -954,18 +962,28 @@ class osql
     {
       if ($this->driver === 'MYSQLI')
       {
-        try 
+        if(@$this->connect->ping())
         {
-            $this->prepare_query = $this->connect->prepare($query);
-            if ($this->prepare_query === false) {
-                $message = 'Wrong query: '.$this->connect->error;
-                $this->error($message);
-            }
+        
+          try 
+          {
+              $this->prepare_query = $this->connect->prepare($query);
+              if ($this->prepare_query === false) {
+                  $message = 'Wrong query: '.$this->connect->error;
+                  $this->error($message);
+              }
+          }
+          catch (\Throwable $e)
+          {
+            $this->error($e->getMessage());
+          }
         }
-        catch (\Throwable $e)
+        else
         {
-          $this->error($e->getMessage());
+          $message = 'MYSQL is not connected';
+          $this->error($message);
         }
+
       }
 
       elseif ($this->driver === 'PDO')
@@ -988,17 +1006,25 @@ class osql
   {
     if($this->driver === 'MYSQLI')
     {
-      try
+      if(@$this->connect->ping())
       {
-            $result = $this->connect->multi_query($query);
-            if ($result) {
-              $this->multi_query_csv($result);
-            }
+        try
+        {
+              $result = $this->connect->multi_query($query);
+              if ($result) {
+                $this->multi_query_csv($result);
+              }
+        }
+        
+        catch (\Throwable $e)
+        {
+          $message = $e->getMessage().' at query index <b>'.$this->multi_query_error_index .'</b>, this query and any other query that follow has failed';
+          $this->error($message);
+        }
       }
-      
-      catch (\Throwable $e)
+      else
       {
-        $message = $e->getMessage().' at query index <b>'.$this->multi_query_error_index .'</b>, this query and any other query that follow has failed';
+        $message = 'MYSQL is not connected';
         $this->error($message);
       }
     }
@@ -1022,21 +1048,29 @@ class osql
     {
       if ($this->driver === 'MYSQLI')
       {
-        try
+        if(@$this->connect->ping())
         {
-            @$param = $this->prepare_query->bind_param(...$args);
-            if ($param === false)
-            {
-                $error = $this->prepare_query->error ?: 'Number of variables doesn\'t match number of parameters in prepared statement  OR other error may occur';
-                $message = 'Query bind param failed: '.$error;
-                $this->error($message);
-            }
+          try
+          {
+              @$param = $this->prepare_query->bind_param(...$args);
+              if ($param === false)
+              {
+                  $error = $this->prepare_query->error ?: 'Number of variables doesn\'t match number of parameters in prepared statement  OR other error may occur';
+                  $message = 'Query bind param failed: '.$error;
+                  $this->error($message);
+              }
 
+          }
+
+          catch (\Throwable $e)
+          {
+              $this->error($e->getMessage());
+          }
         }
-
-        catch (\Throwable $e)
+        else
         {
-            $this->error($e->getMessage());
+          $message = 'MYSQL is not connected';
+          $this->error($message);
         }
       }
 
@@ -1105,8 +1139,11 @@ class osql
 
       if ($this->driver === 'MYSQLI')
       {
-        try {
-  
+        if(@$this->connect->ping())
+        {
+          try
+          {
+    
             $execute =  $this->prepare_query->execute();
 
             if ($execute === false)
@@ -1152,10 +1189,16 @@ class osql
                 $this->csv($result);
               }
             }
+          }
+          catch (\Throwable $e)
+          {
+            $this->error($e->getMessage());
+          }
         }
-        catch (\Throwable $e)
+        else
         {
-          $this->error($e->getMessage());
+          $message = 'MYSQL is not connected';
+          $this->error($message);
         }
       }
       
@@ -1245,6 +1288,18 @@ class osql
       {
         $this->display_error = false;
       }
+    }
+  }
+
+  public function still_connected()
+  {
+    if(@$this->connect->ping())
+    {
+      return true;
+    }
+    else
+    {
+      return false;
     }
   }
 
