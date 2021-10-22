@@ -61,7 +61,7 @@ mysql optimizer also known as **MOP** is a **php query handling and manipulation
  * [Video](https://youtube.com/playlist?list=PLJPXjarj_PAq1zGQpT8gOYqedDLsrjq9C)
  
 ## App Inventor Documentation
-  * [Kodular](https://community.kodular.io/t/osql-mysql-freedom-is-here-injection-stop-and-bind-parameter-available/143704)
+  * [Kodular](https://community.kodular.io/t/mop-mysql-freedom-is-here-injection-stop-and-bind-parameter-available/143704?u=azeez_ibrahim)
 
 
 ## Installation
