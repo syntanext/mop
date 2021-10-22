@@ -1,15 +1,15 @@
 <?php
 namespace mysql;
 
-if(!isset($OSQL)){ die('direct access is not allow');};
-
 use mysql\configuration as config;
 use Mysqli;
 use Pdo;
 
+if(!defined('MOP')){die('Direct access is not allow');}
+
 /*  
  *  description:Run MYSQL query faster and get result in a reliable way.;
- *  Version: 1.2.1;
+ *  Version: 2.0.0;
  *  Type: App inventor version.
  *  Recommended php version: >= 7;
  *  website: https://github.com/hazeezet/mysql
@@ -23,7 +23,7 @@ use Pdo;
   // Handling mysql error
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-class osql
+class mop
 {
 
   //PUBLIC
@@ -64,9 +64,9 @@ class osql
   function __construct()
   {
    
-      if (file_exists(__DIR__.'/osqlconfig.php'))
+      if (file_exists(__DIR__.'/mopconfig.php'))
       {
-          require_once __DIR__.'/osqlconfig.php';
+          require_once __DIR__.'/mopconfig.php';
           $configuration = new config;
           $this->config = $configuration->config();
 
@@ -88,8 +88,8 @@ class osql
 
       else
       {
-        $message = "OSQL require it's configuration file.";
-        header("HTTP/1.0 400 Bad Request");
+        $message = "MOP require it's configuration file.";
+        header("HTTP/1.0 204");
         die($message);
       }
 
@@ -164,7 +164,7 @@ class osql
     catch (\Throwable $e)
     {
         $message = "Database Connection Failed: " . $e->getMessage();   //reports a DB connection failure
-        header("HTTP/1.0 400 Bad Request");
+        header("HTTP/1.0 204");
         die($message);
     }
   }
@@ -186,7 +186,7 @@ class osql
     catch (\Throwable $e)
     {
       $message = "Database Connection Failed:" . $e->getMessage();
-      header("HTTP/1.0 400 Bad Request");
+      header("HTTP/1.0 204");
       die($message);
     }
   }
@@ -198,13 +198,13 @@ class osql
 
     if(!isset($_POST['key']))
     {
-        header("HTTP/1.0 400 Bad Request");
+        header("HTTP/1.0 204");
         die('Bad request');
     }
 
     elseif($_POST['key'] != $this->sqlkey)
     {
-        header("HTTP/1.0 400 Bad Request");
+        header("HTTP/1.0 204");
         die('Bad request');
     }
 
@@ -216,7 +216,7 @@ class osql
             {
                 if (strlen(stristr($query,$Injection)) > 0)
                 {
-                    header("HTTP/1.0 400 Bad Request");
+                    header("HTTP/1.0 204");
                     die('You may not have the permission to run this query');
                     break;
                 }
@@ -230,7 +230,7 @@ class osql
         {
             if (strlen(stristr($query,$Injection)) > 0)
             {
-                header("HTTP/1.0 400 Bad Request");
+                header("HTTP/1.0 204");
                 die('You may not have the permission to run this query');
                 break;
             }
@@ -238,7 +238,7 @@ class osql
 
         $Rquery0 = str_replace("="," = ",$query);  // It Rearrange the query
         $Rquery1 = trim(preg_replace('/\s\s+/', ' ', str_replace("\n", " ", $Rquery0))); //It Rearrange the query
-        $Rquery2 = str_replace( array( "' '","' '","''","'-'","'_'","'&'","'^'","'*'","'x'","1__","1--"," i ","--","|","?","'= 1'","1 = 1","#","' = '","top 1","x = x","1 = 0","x = y", ),'',$Rquery1 ); // It Rearrange the query
+        $Rquery2 = str_replace( array( "' '","' '","''","'-'","'_'","'&'","'^'","'*'","'x'","1__","1--"," i ","--","|","'= 1'","1 = 1","#","' = '","top 1","x = x","1 = 0","x = y", ),'',$Rquery1 ); // It Rearrange the query
         $Rquery3 = trim(preg_replace('/" = "|""|= "|"|<!--.*?--> <!--.*?-->|"&"|"^"|"*"|"x"|[0-9]+ = [0-9]+|top 1 /', ' ', $Rquery2)); // Rearrange the query
         $Rquery4 = trim(preg_replace('/\s\s+/', ' ', str_replace("\n", " ", $Rquery3))); // It Rearrange the query
 
@@ -296,7 +296,7 @@ class osql
       catch (\Throwable $e)
       {
         $message = $e->getMessage();
-        header("HTTP/1.0 400 Bad Request");
+        header("HTTP/1.0 204");
         die($message);
       }
     }
@@ -316,36 +316,11 @@ class osql
         catch (\Throwable $e)
         {
           $message = $e->getMessage();
-          header("HTTP/1.0 400 Bad Request");
+          header("HTTP/1.0 204");
           die($message);
         }
         
     }
-  }
-
-  public function param(...$args)
-  {
-    if ($this->driver === 'PDO')
-      {
-        try
-        {
-            $param = $this->pdo_query->bindParam(...$args);
-            if ($param === false)
-            {
-                $error = $this->pdo_query->error ?: 'Number of elements in type definition string may not match number of bind variables OR other error may occur';
-                $message = 'Query bind param failed: '.$error;
-                header("HTTP/1.0 400 Bad Request");
-                die($message);
-            }
-        }
-        
-        catch (\Throwable $e)
-        {
-          $message = $e->getMessage();
-          header("HTTP/1.0 400 Bad Request");
-          die($message);
-        }
-      }
   }
 
   public function run_all(...$args)
@@ -363,7 +338,7 @@ class osql
         catch (\Throwable $e)
         {
           $message = $e->getMessage();
-          header("HTTP/1.0 400 Bad Request");
+          header("HTTP/1.0 204");
           die($message);
         }
       }
@@ -386,7 +361,7 @@ class osql
         catch (\Throwable $e)
         {
           $message = $e->getMessage();
-          header("HTTP/1.0 400 Bad Request");
+          header("HTTP/1.0 204");
           die($message);
         }
         

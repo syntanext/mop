@@ -1,7 +1,7 @@
 <?php
 namespace mysql;
 
-if(!isset($OSQL)){ die('direct access is not allow');};
+if(!defined('MOP')){die('Direct access is not allow');}
 
 class configuration
 {
@@ -18,13 +18,13 @@ public function config ()
 
         "password" => '',       //password
 
-        "database" => 'osql',       //database name
+        "database" => 'mop',       //database name
 
         "injection" => 
         [
             'username',
             'password',
-            'osql',
+            'mop',
         ],
 
         "masterkey" => 'key',

@@ -1,9 +1,9 @@
 <?php
-use mysql\osql as mysql;
+use mysql\mop as mysql;
 
-$OSQL = true;
+define("MOP","mysql optimizer");
 
-require_once 'src/osql.php';
+require_once 'src/mop.php';
 
 header('Cache-Control: no-cache, must-revalidate');
 
@@ -11,7 +11,7 @@ if(isset($_POST['query']) && isset($_POST['key']))
 {   
     $connect = new mysql();
 
-    $query = $_POST['query'];
+    $query = urldecode($_POST['query']);
 
     $connect->verify($query);
 
@@ -19,7 +19,7 @@ if(isset($_POST['query']) && isset($_POST['key']))
 
     $connect->query();
 
-    $parameter = array();
+    $parameter = [];
 
     if(isset($_POST['param']))
     {
@@ -27,7 +27,7 @@ if(isset($_POST['query']) && isset($_POST['key']))
 
         foreach ($param as $key => $value)
         {
-            array_push($parameter, $value);
+            $parameter[] = urldecode($value);
         }
 
         $connect->run_all($parameter);
@@ -40,7 +40,7 @@ if(isset($_POST['query']) && isset($_POST['key']))
 
     if(isset($_POST['add_query']))
     {
-        $query = $_POST['add_query'];
+        $query = urldecode($_POST['add_query']);
 
         $connect->verify($query);
         $connect->free_results();
@@ -50,7 +50,7 @@ if(isset($_POST['query']) && isset($_POST['key']))
     if(!empty($connect->csv))
     {
 
-        header("HTTP/1.0 200 Rows");
+        header("HTTP/1.0 200");
 
         echo $connect->csv;
     }
@@ -58,7 +58,7 @@ if(isset($_POST['query']) && isset($_POST['key']))
     else
     {
 
-        header("HTTP/1.0 201 Rows");
+        header("HTTP/1.0 201");
 
         echo $connect->num_of_rows;
     }
@@ -69,6 +69,7 @@ if(isset($_POST['query']) && isset($_POST['key']))
 
 else
 {
+    header("HTTP/1.0 204");
     echo "Bad Request";
 }
 ?>
