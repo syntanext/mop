@@ -1,3 +1,6 @@
+VERSION:::: 2.0.1
+    * Responds code for error change from 204 to 206.
+
 VERSION:::: 2.0.0
     * General improvement.
     * Binding parameter bugs fixed.

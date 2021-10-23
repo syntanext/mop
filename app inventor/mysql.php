@@ -69,7 +69,7 @@ if(isset($_POST['query']) && isset($_POST['key']))
 
 else
 {
-    header("HTTP/1.0 204");
+    header("HTTP/1.0 206");
     echo "Bad Request";
 }
 ?>

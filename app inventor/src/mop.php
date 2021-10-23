@@ -89,7 +89,7 @@ class mop
       else
       {
         $message = "MOP require it's configuration file.";
-        header("HTTP/1.0 204");
+        header("HTTP/1.0 206");
         die($message);
       }
 
@@ -164,7 +164,7 @@ class mop
     catch (\Throwable $e)
     {
         $message = "Database Connection Failed: " . $e->getMessage();   //reports a DB connection failure
-        header("HTTP/1.0 204");
+        header("HTTP/1.0 206");
         die($message);
     }
   }
@@ -186,7 +186,7 @@ class mop
     catch (\Throwable $e)
     {
       $message = "Database Connection Failed:" . $e->getMessage();
-      header("HTTP/1.0 204");
+      header("HTTP/1.0 206");
       die($message);
     }
   }
@@ -198,13 +198,13 @@ class mop
 
     if(!isset($_POST['key']))
     {
-        header("HTTP/1.0 204");
+        header("HTTP/1.0 206");
         die('Bad request');
     }
 
     elseif($_POST['key'] != $this->sqlkey)
     {
-        header("HTTP/1.0 204");
+        header("HTTP/1.0 206");
         die('Bad request');
     }
 
@@ -216,7 +216,7 @@ class mop
             {
                 if (strlen(stristr($query,$Injection)) > 0)
                 {
-                    header("HTTP/1.0 204");
+                    header("HTTP/1.0 206");
                     die('You may not have the permission to run this query');
                     break;
                 }
@@ -230,7 +230,7 @@ class mop
         {
             if (strlen(stristr($query,$Injection)) > 0)
             {
-                header("HTTP/1.0 204");
+                header("HTTP/1.0 206");
                 die('You may not have the permission to run this query');
                 break;
             }
@@ -296,7 +296,7 @@ class mop
       catch (\Throwable $e)
       {
         $message = $e->getMessage();
-        header("HTTP/1.0 204");
+        header("HTTP/1.0 206");
         die($message);
       }
     }
@@ -316,7 +316,7 @@ class mop
         catch (\Throwable $e)
         {
           $message = $e->getMessage();
-          header("HTTP/1.0 204");
+          header("HTTP/1.0 206");
           die($message);
         }
         
@@ -338,7 +338,7 @@ class mop
         catch (\Throwable $e)
         {
           $message = $e->getMessage();
-          header("HTTP/1.0 204");
+          header("HTTP/1.0 206");
           die($message);
         }
       }
@@ -361,7 +361,7 @@ class mop
         catch (\Throwable $e)
         {
           $message = $e->getMessage();
-          header("HTTP/1.0 204");
+          header("HTTP/1.0 206");
           die($message);
         }
         
