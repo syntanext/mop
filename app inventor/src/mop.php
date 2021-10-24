@@ -9,7 +9,7 @@ if(!defined('MOP')){die('Direct access is not allow');}
 
 /*  
  *  description:Run MYSQL query faster and get result in a reliable way.;
- *  Version: 2.0.0;
+ *  Version: 2.1.0;
  *  Type: App inventor version.
  *  Recommended php version: >= 7;
  *  website: https://github.com/hazeezet/mysql
@@ -27,17 +27,13 @@ class mop
 {
 
   //PUBLIC
-    public $csv_header;
     public $csv;
-    public $header_row = array();
     public $connect;
     public $num_of_rows = 0;
-    public $insert_id = 0;
 
 
 
   //PRIVATE
-    private $first_error;
     private $prepare_query;
     private $pdo_query;
 
@@ -55,7 +51,6 @@ class mop
 
   //PROTECTED
     protected $config;
-    protected $raw_result_query = array();
 
 
 
@@ -100,25 +95,29 @@ class mop
   {
 
       $csv = '';
-      $csv_header = '';
 
       if ($this->driver === 'PDO')
       {
 
         $count = $this->pdo_query->columnCount();
+        $num_of_rows = $this->num_of_rows;
 
-        //Get all Header row
-        for ($a=0; $a < $count; $a++)
+        if($count > 0)
         {
-          $columnName = $this->pdo_query->getColumnMeta($a);
-          $name = $columnName['name'];
-          $name = str_replace("\"","\"\"",$name);
-          $csv_header .= "\"$name\"".",";
-          array_push($this->header_row,$name);
+          for ($a=0; $a < $count; $a++)
+          {
+            
+            $csv .= "\"$num_of_rows\"".",";
+          }
+          $csv = rtrim($csv, ",")."\n";
         }
-        $csv_header = rtrim($csv_header, ",")."\n";
 
-        //Get all Rows and colums
+        else
+        {
+          $csv .= "\"$num_of_rows\""."\n";
+        }
+
+        //Get all Rows and columns
         foreach ($this->pdo_query as $column => $value)
         {
           for ($b=0; $b < $count; $b++)
@@ -126,7 +125,6 @@ class mop
             if ($value[$b] == '')
             {
               $csv .= ' '.",";
-              $csv_header .= ' '.",";
             }
             
             else
@@ -134,39 +132,14 @@ class mop
               $col = $value[$b];
               $col = str_replace("\"","\"\"",$col);
               $csv .= "\"$col\"".",";
-              $csv_header .= "\"$col\"".",";
             }
 
           }
           $csv = rtrim($csv, ",")."\n";
-          $csv_header = rtrim($csv_header, ",")."\n";
         }
 
         $this->csv = $csv;
-        $this->csv_header = $csv_header;
       }
-  }
-
-  private function mysqli_connection()
-  {
-    $host = $this->host;
-    $username = $this->username;
-    $password = $this->password;
-    $database = $this->databasename;
-
-    try
-    {
-      @$this->connect = new mysqli ($host,$username,$password,$database);   //connect
-      $this->driver = 'MYSQLI';
-
-    }
-          
-    catch (\Throwable $e)
-    {
-        $message = "Database Connection Failed: " . $e->getMessage();   //reports a DB connection failure
-        header("HTTP/1.0 206");
-        die($message);
-    }
   }
 
   private function pdo_connection()
@@ -196,19 +169,13 @@ class mop
   public function verify($query)
   {
 
-    if(!isset($_POST['key']))
+    if($_POST['key'] != $this->sqlkey)
     {
         header("HTTP/1.0 206");
         die('Bad request');
     }
 
-    elseif($_POST['key'] != $this->sqlkey)
-    {
-        header("HTTP/1.0 206");
-        die('Bad request');
-    }
-
-    if ($this->masterkey != $this->post_masterkey)
+    elseif ($this->masterkey != $this->post_masterkey)
     {
         if (!empty($this->injection))
         {
@@ -252,32 +219,7 @@ class mop
 
   public function connect()
   {
-    if (isset($this->config['driver']))
-    {
-
-      if (!empty($this->config['driver']))
-      {
-        $this->driver = strtoupper($this->config['driver']);
-      }
-
-      if ($this->driver ==='PDO')
-      {
-        $this->pdo_connection();
-
-      }
-
-      //else connect using mysqli--> TODO
-      else
-      {
-        $this->pdo_connection();
-      }
-
-    }
-
-    else
-    {
       $this->pdo_connection();
-    }
   }
 
   public function add_query($query)
@@ -287,7 +229,7 @@ class mop
     {
       try
       {
-        $this->pdo_query = $this->connect->query($query);#->fetchAll(PDO::FETCH_ASSOC);
+        $this->pdo_query = $this->connect->query($query);
         $this->num_of_rows = $this->pdo_query->rowCount();
         $this->insert_id = $this->connect->lastInsertId();
         $this->csv();
@@ -331,7 +273,6 @@ class mop
         {
           $this->pdo_query->execute(...$args);
           $this->num_of_rows = $this->pdo_query->rowCount();
-          $this->insert_id = $this->connect->lastInsertId();
           $this->csv();
           $this->pdo_query->closeCursor();
         }
@@ -353,7 +294,6 @@ class mop
         {
           $this->pdo_query->execute();
           $this->num_of_rows = $this->pdo_query->rowCount();
-          $this->insert_id = $this->connect->lastInsertId();
           $this->csv();
           $this->pdo_query->closeCursor();
 
@@ -370,12 +310,9 @@ class mop
 
   public function free_results()
   {
-    $this->csv_header = '';
     $this->csv = '';
     $this->num_of_rows = 0;
     $this->insert_id = 0;
-
-    $this->raw_result_query = array();
   }
 
   public function close()

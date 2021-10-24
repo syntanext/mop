@@ -43,26 +43,16 @@ if(isset($_POST['query']) && isset($_POST['key']))
         $query = urldecode($_POST['add_query']);
 
         $connect->verify($query);
+
         $connect->free_results();
+
         $connect->add_query($query);
     }
 
-    if(!empty($connect->csv))
-    {
+    header("HTTP/1.0 200");
 
-        header("HTTP/1.0 200");
+    echo $connect->csv;
 
-        echo $connect->csv;
-    }
-
-    else
-    {
-
-        header("HTTP/1.0 201");
-
-        echo $connect->num_of_rows;
-    }
-    
     $connect->close();
     
 }
@@ -70,6 +60,7 @@ if(isset($_POST['query']) && isset($_POST['key']))
 else
 {
     header("HTTP/1.0 206");
+    
     echo "Bad Request";
 }
 ?>
