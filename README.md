@@ -53,6 +53,9 @@ mysql optimizer also known as **MOP** is a **php query handling and manipulation
     // CHECK DOCUMENTATION FOR MORE
     
   ```
+## Tags and Version
+ * tags with **aiv** means an update for app inventor eg 2.0.0-aiv
+ * tags with nothing means an update for website eg 2.0.0
 ## Documentation
  * [Documentation](https://github.com/hazeezet/mysql/wiki)
  * [Reference](https://github.com/hazeezet/mysql/wiki/reference)
