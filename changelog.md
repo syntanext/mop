@@ -1,19 +1,21 @@
+VERSION:::: 2.1.0
+    * multiple query now support both PDO and MYSQLI connection.
+    * checking if database is still connected is DEPRECATED.
+    * bugs fixed.
+
 VERSION:::: 2.0.0
     * class name has been change.
     * you can easily upgrade fromm V1 to V2.
     * added new feature import csv file or sting into the database.
     * bugs fixed.
 
-
 VERSION:::: 1.4.3
     * Bugs fixed.
     * added new feature to check if database is still connected.
 
-
 VERSION:::: 1.4.2
     * change of driver Bugs fixed.
     * change of database information bugs fixed.
-
 
 VERSION:::: 1.4.1
     * Bugs fixed.

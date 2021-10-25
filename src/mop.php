@@ -7,7 +7,7 @@ use Pdo;
 
 /*  
  *  description:Run MYSQL query faster and get result in a reliable way.;
- *  Version: 2.0.0;
+ *  Version: 2.1.0;
  *  Type: website version.
  *  Recommended php version: >= 7;
  *  website: https://github.com/hazeezet/mysql
@@ -72,7 +72,7 @@ class mop
     protected $import_csv_insert_type = "UPDATE";
 
 
-  // Osql initialization method
+  // MOP initialization method
   function __construct()
   {
     if (func_num_args() < 4)
@@ -204,7 +204,7 @@ class mop
 
     else
     {
-      $error_message .= '<b>MOP Error: </b> This property or method'.' on line '.'<b>'.$caller['line'].'</b> can not get execute because of previous Osql error'.'</b> in <b>'.$caller['file'].'</b>: : : : : :'."\n";
+      $error_message .= '<b>MOP Error: </b> This property or method'.' on line '.'<b>'.$caller['line'].'</b> can not get execute because of previous MOP error'.'</b> in <b>'.$caller['file'].'</b>: : : : : :'."\n";
     }
     
     $this->error_message .= $error_message;
@@ -290,6 +290,9 @@ class mop
           $csv = rtrim($csv, ",")."\n";
           $csv_header = rtrim($csv_header, ",")."\n";
         }
+        $csv = rtrim($csv, "\n");
+        $csv_header = rtrim($csv_header, "\n");
+
         $this->csv = $csv;
         $this->csv_header = $csv_header;
         mysqli_next_result($this->connect);
@@ -334,6 +337,9 @@ class mop
           $csv = rtrim($csv, ",")."\n";
           $csv_header = rtrim($csv_header, ",")."\n";
         }
+
+        $csv = rtrim($csv, "\n");
+        $csv_header = rtrim($csv_header, "\n");
 
         $this->csv = $csv;
         $this->csv_header = $csv_header;
@@ -447,10 +453,13 @@ class mop
             $multi_raw_result_query[] = $row;
             foreach ($row as $key => $value)
             {
-              if ($value == '') {
+              if ($value == '')
+              {
                 $csv .= ' '.",";
                 $csv_header .= ' '.",";
-              }else {
+              }
+              else
+              {
                 $col = $value;
                 $col = str_replace("\"","\"\"",$col);
                 $csv .= "\"$col\"".",";
@@ -461,6 +470,9 @@ class mop
             $csv = rtrim($csv, ",")."\n";
             $csv_header = rtrim($csv_header, ",")."\n";
           }
+
+          $csv = rtrim($csv, "\n");
+          $csv_header = rtrim($csv_header, "\n");
 
           array_push($this->multi_raw_result_query, $multi_raw_result_query);
           array_push($this->multi_csv,$csv);
@@ -958,7 +970,7 @@ class mop
 
         if(!$this->error)
         {
-          if(($this->import_csv_is_string === false))
+          if(($is_string === false))
           {
             if (file_exists($path))
             {
@@ -967,7 +979,9 @@ class mop
             }
             else
             {
-              echo 'noooo';
+              $message = 'csv path <b>'.$path.'</b> does not exist';
+              $this->runtime_error = true;
+              $this->error($message);
             }
           }
 
@@ -1259,37 +1273,26 @@ class mop
 
   public function multi_query($query)
   {
-    if($this->driver === 'MYSQLI')
+    $driver = $this->driver;
+    $this->driver('mysqli');
+
+    try
     {
-      if(@$this->connect->ping())
+      $result = $this->connect->multi_query($query);
+      if ($result)
       {
-        try
-        {
-              $result = $this->connect->multi_query($query);
-              if ($result) {
-                $this->multi_query_csv($result);
-              }
-        }
-        
-        catch (\Throwable $e)
-        {
-          $message = $e->getMessage().' at query index <b>'.$this->multi_query_error_index .'</b>, this query and any other query that follow has failed';
-          $this->error($message);
-        }
-      }
-      else
-      {
-        $message = 'MYSQL is not connected';
-        $this->error($message);
+        $this->multi_query_csv($result);
       }
     }
-
-    else
+    
+    catch (\Throwable $e)
     {
-      $message = 'MULTI_QUERY: connection must be made using <b>MYSQLI</b>.';
-      $this->runtime_error = true;
+      $message = $e->getMessage().' at query index <b>'.$this->multi_query_error_index .'</b>, this query and any other query that follow has failed';
       $this->error($message);
     }
+
+    $this->driver($driver);
+    
   }
 
   public function param(...$args)
@@ -1546,18 +1549,6 @@ class mop
     }
   }
 
-  public function still_connected()
-  {
-    if(@$this->connect->ping())
-    {
-      return true;
-    }
-    else
-    {
-      return false;
-    }
-  }
-
   public function driver()
   {
     if (func_num_args() != 1)
@@ -1741,8 +1732,5 @@ class mop
     }
   }
 }
-
-
-
 
 ?>
