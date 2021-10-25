@@ -9,7 +9,7 @@ if(!defined('MOP')){die('Direct access is not allow');}
 
 /*  
  *  description:Run MYSQL query faster and get result in a reliable way.;
- *  Version: 2.1.0;
+ *  Version: 2.1.1;
  *  Type: App inventor version.
  *  Recommended php version: >= 7;
  *  website: https://github.com/hazeezet/mysql
@@ -138,6 +138,7 @@ class mop
           $csv = rtrim($csv, ",")."\n";
         }
 
+        $csv = rtrim($csv, "\n");
         $this->csv = $csv;
       }
   }

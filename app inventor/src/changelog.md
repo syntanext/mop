@@ -1,3 +1,6 @@
+VERSION:::: 2.1.1
+    * Bugs fixed
+
 VERSION:::: 2.1.0
     * 201 Responds code has been removed
     * You now have a block to check for number of affected or selected rows
@@ -12,7 +15,6 @@ VERSION:::: 2.0.0
 
 VERSION:::: 1.2.1
     * Added adding of query for store procedure with an OUT parameter in mysql.
-
 
 VERSION:::: 1.2.0
     * First release from previous script
