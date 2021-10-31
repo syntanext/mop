@@ -1,3 +1,7 @@
+VERSION:::: 2.1.2
+    * Bugs fixed
+    * Fixed different between null value and empty value at the end of csv row
+
 VERSION:::: 2.1.0
     * multiple query now support both PDO and MYSQLI connection.
     * checking if database is still connected is DEPRECATED.

@@ -7,7 +7,7 @@ use Pdo;
 
 /*  
  *  description:Run MYSQL query faster and get result in a reliable way.;
- *  Version: 2.1.0;
+ *  Version: 2.1.1;
  *  Type: website version.
  *  Recommended php version: >= 7;
  *  website: https://github.com/hazeezet/mysql
@@ -273,10 +273,15 @@ class mop
           $this->raw_result_query[] = $row;
           foreach ($row as $key => $value)
           {
-            if ($value == '')
+            if ($value === NULL)
             {
-              $csv .= ' '.",";
-              $csv_header .= ' '.",";
+              $csv .= 'NULL'.",";
+              $csv_header .= 'NULL'.",";
+            }
+            elseif ($value === '')
+            {
+              $csv .= "\"\"".",";
+              $csv_header .= "\"\"".",";
             }
             
             else
@@ -319,10 +324,15 @@ class mop
         {
           for ($b=0; $b < $count; $b++)
           {
-            if ($value[$b] == '')
+            if ($value[$b] === NULL)
             {
-              $csv .= ' '.",";
-              $csv_header .= ' '.",";
+              $csv .= 'NULL'.",";
+              $csv_header .= 'NULL'.",";
+            }
+            elseif ($value[$b] === '')
+            {
+              $csv .= "\"\"".",";
+              $csv_header .= "\"\"".",";
             }
             
             else
@@ -453,10 +463,15 @@ class mop
             $multi_raw_result_query[] = $row;
             foreach ($row as $key => $value)
             {
-              if ($value == '')
+              if ($value === NULL)
               {
-                $csv .= ' '.",";
-                $csv_header .= ' '.",";
+                $csv .= 'NULL'.",";
+                $csv_header .= 'NULL'.",";
+              }
+              elseif ($value === '')
+              {
+                $csv .= "\"\"".",";
+                $csv_header .= "\"\"".",";
               }
               else
               {
@@ -814,7 +829,14 @@ class mop
             {
               foreach ($this->raw_result_query as $row)
               {
-                array_push($ColumnRow, $row[$column]);
+                if ($row[$column] === 'NULL')
+                {
+                  array_push($ColumnRow, NULL);
+                }
+                else
+                {
+                  array_push($ColumnRow, $row[$column]);
+                }
               }
               $key_exist = true;
             }
@@ -846,7 +868,14 @@ class mop
 
               if (array_key_exists($column,$data))
               {
-                array_push($ColumnRow, $data[$column]);
+                if ($data[$column] === 'NULL')
+                {
+                  array_push($ColumnRow, NULL);
+                }
+                else
+                {
+                  array_push($ColumnRow, $data[$column]);
+                }
                 $key_exist = true;
               }
 
@@ -1029,7 +1058,14 @@ class mop
               {
                 foreach ($this->multi_raw_result_query[$index] as $row)
                 {
-                  array_push($ColumnRow, $row[$columnName]);
+                  if ($row[$columnName] === 'NULL')
+                  {
+                    array_push($ColumnRow, NULL);
+                  }
+                  else
+                  {
+                    array_push($ColumnRow, $row[$columnName]);
+                  }
                 }
                 $key_exist = true;
               }
@@ -1052,7 +1088,6 @@ class mop
 
               
                 $ColumnRow = array(); //variable where the column you want is stored
-                $ColumnNum = $column;
                 $row = str_getcsv($this->multi_csv[$index], "\n");
                 $length = count($row);
                 $key_exist = false;
@@ -1063,7 +1098,14 @@ class mop
 
                     if (array_key_exists($column,$data))
                     {
-                      array_push($ColumnRow, $data[$ColumnNum]);
+                      if ($data[$column] === 'NULL')
+                      {
+                        array_push($ColumnRow, NULL);
+                      }
+                      else
+                      {
+                        array_push($ColumnRow, $data[$column]);
+                      }
                       $key_exist = true;
                     }
 
