@@ -1,3 +1,6 @@
+VERSION:::: 2.1.3
+    * Bugs fixed
+
 VERSION:::: 2.1.2
     * Bugs fixed
     * Fixed different between null value and empty value at the end of csv row
