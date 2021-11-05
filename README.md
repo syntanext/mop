@@ -10,11 +10,7 @@ mysql optimizer also known as **MOP** is a **php query handling and manipulation
 ## Supported Query Handler
 - MYSQLI
 - PDO
-## Upgrading
-
-* [from version 1 to version 2 or after](https://github.com/hazeezet/mysql/wiki/upgrade#V1-to-V2)
-
-
+- 
 ## Geting Started
   you can actually run 4 lines of code and get your result with this library
   ```php
@@ -62,19 +58,15 @@ mysql optimizer also known as **MOP** is a **php query handling and manipulation
  * [Security](https://github.com/hazeezet/mysql/wiki/security)
  * [Video](https://youtube.com/playlist?list=PLJPXjarj_PAq1zGQpT8gOYqedDLsrjq9C)
  
-## App Inventor Documentation
-  * [Kodular](https://community.kodular.io/t/mop-mysql-freedom-is-here-injection-stop-and-bind-parameter-available/143704?u=azeez_ibrahim)
-  * [Video](https://www.youtube.com/playlist?list=PLJPXjarj_PAqZYeVEkCaIayxQTWxCoXKw)
-
 ## Installation
   It can be **included** or **required** in any php file or download using composer
   > Composer install
   ```bash
-  composer require hazeezet/mysql
+  composer require bringittocode/mop
   ```
   > Manual install
 
-  download both files in src folder and place them anywhere in your folder directory then **include** or **reqiure** osql.php file.
+  download both files in src folder and place them anywhere in your folder directory then **include** or **reqiure** mop.php file.
   
   IF YOU GET UNKNOWN ERROR WITH THIS LIBRARY ON YOUR WEB SERVER...... YOU HAVE TO TRY THIS.
   
@@ -89,4 +81,4 @@ mysql optimizer also known as **MOP** is a **php query handling and manipulation
    
    MOP is licensed under the [MIT License](http://opensource.org/licenses/MIT).
 
-   Copyright 2021 hazeezet
+   Copyright 2021 Bringittocode
