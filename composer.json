@@ -1,8 +1,8 @@
 {
-    "name": "hazeezet/mysql",
+    "name": "bitc/mop",
     "description": "Run MYSQL query faster and get result in a reliable way.",
-    "keywords": ["mysql","pdo","mysqli","query","osql"],
-    "homepage": "https://github.com/hazeezet/mysql",
+    "keywords": ["mysql","pdo","mysqli","query","mop","database"],
+    "homepage": "https://github.com/bringittocode/mop",
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -10,11 +10,16 @@
             "name": "hazeezet",
             "email": "hazeezet@gmail.com",
             "role": "Developer"
+        },
+        {
+            "name": "Bringittocode",
+            "email": "Bringittocode@gmail.com",
+            "role": "Developer"
         }
     ],
     "autoload": {
         "psr-4": {
-            "mysql\\": "src/"
+            "mop\\": "src/"
         }
     },
     "require": {
