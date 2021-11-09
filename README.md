@@ -53,7 +53,6 @@ mysql optimizer also known as **MOP** is a **php query handling and manipulation
 ## Documentation
  * [Documentation](https://github.com/Bringittocode/mop/wiki)
  * [Reference](https://github.com/Bringittocode/mop/wiki/reference)
- * [Security](https://github.com/Bringittocode/mop/wiki/security)
  * [Video](https://youtube.com/playlist?list=PLJPXjarj_PAq1zGQpT8gOYqedDLsrjq9C)
  
 ## Installation
