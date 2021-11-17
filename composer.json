@@ -9,12 +9,12 @@
         {
             "name": "hazeezet",
             "email": "hazeezet@gmail.com",
-            "role": "Developer"
+            "role": "owner"
         },
         {
             "name": "Bringittocode",
             "email": "Bringittocode@gmail.com",
-            "role": "Developer"
+            "role": "Organisation"
         }
     ],
     "autoload": {
