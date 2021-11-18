@@ -24,7 +24,7 @@ mysql optimizer also known as **MOP** is a **php query handling and manipulation
     // SIMPLE PREVIEW
     
     // connect
-    $firstconnection = new mysql\mop($DB_ADDRESS,$DB_USER,$DB_PASS,$DB_NAME);
+    $firstconnection = new Mysql\mop($DB_ADDRESS,$DB_USER,$DB_PASS,$DB_NAME);
 
     // query
     $query = "SELECT ....";
