@@ -19,7 +19,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "mop\\": "src/"
+            "Mysql\\": "src/"
         }
     },
     "require": {

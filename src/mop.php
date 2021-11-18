@@ -1,7 +1,7 @@
 <?php
-namespace mysql;
+namespace Mysql;
 
-use mysql\configuration as config;
+use Mysql\configuration as config;
 use Mysqli;
 use Pdo;
 
@@ -84,12 +84,6 @@ class mop
     {
 
       if (file_exists(__DIR__.'/osqlconfig.php'))
-      {
-          require_once __DIR__.'/osqlconfig.php';
-          $configuration = new config;
-          $this->config = $configuration->config();
-      }
-      elseif (file_exists(__DIR__.'/mopconfig.php'))
       {
           require_once __DIR__.'/mopconfig.php';
           $configuration = new config;
