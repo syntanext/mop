@@ -59,7 +59,7 @@ mysql optimizer also known as **MOP** is a **php query handling and manipulation
   It can be **included** or **required** in any php file or download using composer
   > Composer install
   ```bash
-  composer require bitc/mop
+  composer require bringittocode/mop
   ```
   > Manual install
 
