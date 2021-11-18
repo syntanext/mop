@@ -1,5 +1,5 @@
 {
-    "name": "bitc/mop",
+    "name": "bringittocode/mop",
     "description": "Run MYSQL query faster and get result in a reliable way.",
     "keywords": ["mysql","pdo","mysqli","query","mop","database"],
     "homepage": "https://github.com/bringittocode/mop",
