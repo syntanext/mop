@@ -14,7 +14,7 @@ mysql optimizer also known as **MOP** is a **php query handling and manipulation
 ## Geting Started
   you can actually run 4 lines of code and get your result with this library
   ```php
- $connect = new mysql\mop($DB_ADDRESS,$DB_USER,$DB_PASS,$DB_NAME);
+ $connect = new Mysql\mop($DB_ADDRESS,$DB_USER,$DB_PASS,$DB_NAME);
  $connect->query("SELECT .....");
  $connect->run();
  $connect->get_column('name');
