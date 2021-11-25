@@ -5,7 +5,7 @@
 [![SourceForge](https://img.shields.io/sourceforge/dw/bitc-mop?color=blue&style=for-the-badge)](https://sourceforge.net/projects/bitc-mop/files/latest/download) 
 [![SourceForge](https://img.shields.io/sourceforge/dt/bitc-mop?color=blue&style=for-the-badge)](https://sourceforge.net/projects/bitc-mop/files/latest/download)
 
-![Packagist License](https://img.shields.io/packagist/l/bringittocode/mop?color=blue&style=for-the-badge)
+[![Packagist License](https://img.shields.io/packagist/l/bringittocode/mop?color=blue&style=for-the-badge)](https://github.com/Bringittocode/mop/blob/main/LICENSE)
 
 [![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/bringittocode/mop?include_prereleases&style=for-the-badge)](https://sourceforge.net/projects/bitc-mop/files/latest/download)
 
