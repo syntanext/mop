@@ -1,6 +1,7 @@
 
 ![MOP_logo](https://user-images.githubusercontent.com/52476329/137361314-296884d7-2b98-4069-b753-c20d15ac4c67.png)
 
+[![Download mop](https://img.shields.io/sourceforge/dm/bitc-mop.svg)](https://sourceforge.net/projects/bitc-mop/files/latest/download)    [![Download mop](https://img.shields.io/sourceforge/dw/bitc-mop.svg)](https://sourceforge.net/projects/bitc-mop/files/latest/download)    [![Download mop](https://img.shields.io/sourceforge/dt/bitc-mop.svg)](https://sourceforge.net/projects/bitc-mop/files/latest/download)
 # Mysql Optimizer
 mysql optimizer also known as **MOP** is a **php query handling and manipulation** library providing easy and reliable way to manipulate query and get result in a fastest way.
 
