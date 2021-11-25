@@ -1,7 +1,16 @@
 
 ![MOP_logo](https://user-images.githubusercontent.com/52476329/137361314-296884d7-2b98-4069-b753-c20d15ac4c67.png)
 
-[![Download mop](https://img.shields.io/sourceforge/dm/bitc-mop.svg)](https://sourceforge.net/projects/bitc-mop/files/latest/download)    [![Download mop](https://img.shields.io/sourceforge/dw/bitc-mop.svg)](https://sourceforge.net/projects/bitc-mop/files/latest/download)    [![Download mop](https://img.shields.io/sourceforge/dt/bitc-mop.svg)](https://sourceforge.net/projects/bitc-mop/files/latest/download)
+[![SourceForge](https://img.shields.io/sourceforge/dm/bitc-mop?color=blue&style=for-the-badge)](https://sourceforge.net/projects/bitc-mop/files/latest/download)
+[![SourceForge](https://img.shields.io/sourceforge/dw/bitc-mop?color=blue&style=for-the-badge)](https://sourceforge.net/projects/bitc-mop/files/latest/download) 
+[![SourceForge](https://img.shields.io/sourceforge/dt/bitc-mop?color=blue&style=for-the-badge)](https://sourceforge.net/projects/bitc-mop/files/latest/download)
+
+![Packagist License](https://img.shields.io/packagist/l/bringittocode/mop?color=blue&style=for-the-badge)
+
+![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/bringittocode/mop?include_prereleases&style=for-the-badge)
+
+![GitHub forks](https://img.shields.io/github/forks/bringittocode/mop?style=for-the-badge)
+![GitHub Repo stars](https://img.shields.io/github/stars/bringittocode/mop?style=for-the-badge)
 # Mysql Optimizer
 mysql optimizer also known as **MOP** is a **php query handling and manipulation** library providing easy and reliable way to manipulate query and get result in a fastest way.
 
