@@ -7,7 +7,8 @@
 
 ![Packagist License](https://img.shields.io/packagist/l/bringittocode/mop?color=blue&style=for-the-badge)
 
-![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/bringittocode/mop?include_prereleases&style=for-the-badge)
+[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/bringittocode/mop?include_prereleases&style=for-the-badge)](https://sourceforge.net/projects/bitc-mop/files/latest/download)
+
 
 ![GitHub forks](https://img.shields.io/github/forks/bringittocode/mop?style=for-the-badge)
 ![GitHub Repo stars](https://img.shields.io/github/stars/bringittocode/mop?style=for-the-badge)
