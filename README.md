@@ -88,5 +88,3 @@ mysql optimizer also known as **MOP** is a **php query handling and manipulation
    fork and feel free to pull request....
    
    MOP is licensed under the [MIT License](http://opensource.org/licenses/MIT).
-
-   Copyright 2021 Hazeezet
