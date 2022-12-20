@@ -512,7 +512,7 @@ class mop
         $errors = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS,$index);
         $errors = end($errors);
         $caller = $errors;
-        $error_message = '<b>Osql Error: </b>'.$message.' on line '.'<b>'.$caller['line'].'</b> in <b>'.$caller['file'].'</b>: : : : : :'."\n";
+        $error_message = '<b>MOP Error: </b>'.$message.' on line '.'<b>'.$caller['line'].'</b> in <b>'.$caller['file'].'</b>: : : : : :'."\n";
         if ($this->display_error)
         {
             trigger_error($error_message, E_USER_ERROR);
