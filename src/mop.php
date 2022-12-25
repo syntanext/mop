@@ -610,6 +610,7 @@ class mop
                 //Get all Rows and colums
                 foreach ($this->pdo_query as $column => $value)
                 {
+                    $this->raw_result_query[] = $value;
                     for ($b=0; $b < $count; $b++)
                     {
                         if ($value[$b] === NULL)
