@@ -7,7 +7,7 @@ use Pdo;
 
 /*  
  *  description:Run MYSQL query faster and get result in a reliable way.;
- *  Version: 1.0.1-alpha;
+ *  Version: 1.1.0;
  *  Type: website version.
  *  Recommended php version: >= 7;
  *  website: https://github.com/bringittocode/mop
